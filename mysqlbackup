@@ -2,10 +2,10 @@
 
 PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-OUTDIR="/tmp/mysqlbackup"
+OUTDIR="/tmp/mysqlbackup/"
+OUTDIRAPP="/tmp/mysqlbackup/" + hostname
 TIMESTR=`date +"%y%m%d"`
-NAME=`hostname`
 
-mydumper -c --regex '^(?!(mysql))' -o $OUTDIR
-aws s3 cp $OUTDIR s3://mautic-pilot-backups/${NAME}_mysql_${TIMESTR} --only-show-errors --recursive  --storage-class STANDARD_IA
+mydumper -c --regex '^(?!(mysql))' -o $OUTDIRAPP
+aws s3 cp $OUTDIR s3://mautic-pilot-backups/mysql_${TIMESTR} --only-show-errors --recursive  --storage-class STANDARD_IA
 rm -rf "$OUTDIR/*"
