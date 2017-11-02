@@ -4,8 +4,9 @@ PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 TIMESTR=`date +"%y%m%d"`
 NAME=`hostname`
-BACKUPFILE="/tmp/${NAME}_files_$TIMESTR.tar.gz"
+BACKUPDIR="/tmp/${NAME}"
+BACKUPFILE="/tmp/${NAME}/files_$TIMESTR.tar.gz"
 
 tar -cPp --use-compress-program=pigz -f $BACKUPFILE  /srv/users/
-aws s3 cp $BACKUPFILE s3://mautic-pilot-backups/ --only-show-errors  --storage-class STANDARD_IA
-rm -rf $BACKUPFILE
+aws s3 cp $BACKUPDIR s3://mautic-pilot-backups/ --only-show-errors  --storage-class STANDARD_IA
+rm -rf $BACKUPDIR
